@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue常用指令</title>
+</head>
+<body>
+    <div id="app-2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+        <p v-if="show">
+            显示文本
+        </p>
+        <ol>
+            <li v-for="item in todos">
+                {{item.text}}
+            </li>
+        </ol>
+        <p >{{title}}</p>
+        <button v-on:click="reverseMessage">反转title</button>
+        <p>{{info}}</p>
+        <input type="text" v-model="info">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app2 = new Vue({
+            el:'#app-2',
+            data:{
+                title:'Hellow Word',
+                message:'页面加载于' + new Date().toLocaleString(),
+                show:false  ,// v-if常用来控制元素的显示和隐藏
+                todos:[  // v-for 循环元素
+                    {text:'学习js'},
+                    {text:'学习vue'},
+                    {text:'学习node'}
+                ],
+                info:'你好vue'
+
+            },
+            methods:{
+                reverseMessage: function(){
+                    this.title = this.title.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
