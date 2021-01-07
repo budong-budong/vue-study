@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>created和mounted的区别</title>
+</head>
+
+<body>
+  <div id="app">
+  </div>
+  <div id="example"></div>
+  <h1>created和mounted的区别</h1>
+  <h3>created:在模板渲染成html前调用，即通常初始化某些属性值，再渲染成试图</h3>
+  <h3>mounted:在模板渲染完成html后调用，通常是初始化页面完成后，再对html的demo节点进行一些需要的操作</h3>
+  <h3>通常created使用的次数多，而mounted通常是在一些插件的使用或者组件的使用中进行操作</h3>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          num: 0
+        }
+      },
+      methods: {
+        initData() {
+          this.num = this.num + 1
+        }
+      },
+      created() {
+        this.initData()
+        console.log(this.num, 'created'); //1 "created"
+      },
+      mounted() {
+        this.initData()
+        console.log(this.num, 'mounted'); //2 "mounted"
+      }
+    })
+
+    // Vue.component("demo1", {
+    //   data: function () {
+    //     return {
+    //       name: "",
+    //       age: "",
+    //       city: ""
+    //     }
+    //   },
+    //   template: `<ul><li id='name'>{{name}}</li><li>{{age}}</li><li>{{city}}</li></ul>`,
+    //   created: function () {
+    //     this.name = "唐浩益"
+    //     this.age = "12"
+    //     this.city = "杭州"
+    //     var x = document.getElementById("name")//第一个命令台错误 
+    //     console.log(x.innerHTML);
+    //   },
+    //   mounted: function () {
+    //     var x = document.getElementById("name")
+    //     //  /</span> /第二个命令台输出的结果<span style="font-size: 14px;"> 
+    //     console.log(x.innerHTML);
+    //   }
+    // });
+    // var vm = new Vue({
+    //   el: "#example"
+    // })
+
+  </script>
+</body>
+
+</html>

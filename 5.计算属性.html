@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>original message: {{message}}</p>
+        <p> computed reversed meaasge:{{reversedMessage}}</p>
+        <p>计算属性是基于他们的响应式依赖进行缓存的，他会对数据进行缓存</p>
+        <p>计算属性默认只有getter，不过在需要时你也可以提供一个setter</p>
+    </div>
+    <div id="app1">
+        <p>{{fullname}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello'
+            },
+            computed: {
+                // 计算属性的 getter
+                reversedMessage: function () {
+                    // `this` 指向 vm 实例
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        });
+        var vm = new Vue({
+            el:"#app1",
+            data:{
+               firstname:'小花',
+               lastname:'小丽',
+            },
+            computed:{
+                fullname:function (){
+                    return this.firstname + '' + this.lastname
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

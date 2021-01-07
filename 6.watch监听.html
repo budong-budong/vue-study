@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch监听</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>ask a yes/no question</p>
+        <input v-model="question">
+        <p>{{answer}}</p>
+        <p>当需要在数据变化时执行异步或开销较大的操作时，可以使用watch侦听器</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                question: '',
+                answer: '我不能给你答案，除非你问一个问题'
+            },
+            watch: {
+                question: function (newq, oldq) {
+                    this.answer = '请稍等'
+                    this.debouncedGetAnswer()
+
+                }
+            },
+            created: function () {
+                this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+            },
+            methods: {
+                getAnswer: function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = '这个问题已被记录'
+                        return
+                    }
+                    this.answer = 'Thinking...'
+                    var vm = this
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            vm.answer = _.capitaize(response.data.answer)
+                        })
+                        .watch(function (error) {
+                            vw.answer = '错误' + error
+                        })
+                }
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>
